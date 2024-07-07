@@ -1,9 +1,17 @@
 import { Component } from 'react';
 import './SearchButton.css';
 
-class SearchButton extends Component {
+interface ButtonProps {
+  onClick: () => void;
+}
+
+class SearchButton extends Component<ButtonProps> {
   render() {
-    return <button>Search</button>;
+    return (
+      <button type="submit" onClick={this.props.onClick}>
+        Search
+      </button>
+    );
   }
 }
 
