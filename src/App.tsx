@@ -1,29 +1,52 @@
 import { Component } from 'react';
 import api from './services/api';
-import Navbar from './components/Navbar/Navbar';
+import SearchInput from './components/SearchInput/SearchInput';
+import SearchButton from './components/SearchButton/SearchButton';
 import './App.css';
 
-class App extends Component {
-  state = {
-    category: '',
-  };
+interface AppState {
+  inputValue: string;
+  apiData: string;
+}
+
+class App extends Component<object, AppState> {
+  constructor(props: object) {
+    super(props);
+    this.state = {
+      inputValue: '',
+      apiData: '',
+    };
+  }
 
   getData = () => {
     api.fetchData().then((res) => {
-      const category = res.data.people;
-      this.setState({ category });
+      this.setState({ apiData: res.data.people });
     });
+  };
+
+  handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ inputValue: event.target.value });
+  };
+
+  handleButtonClick = () => {
+    this.getData();
+    console.log(this.state.apiData);
   };
 
   render() {
     return (
       <div className="container">
         <header>
-          <Navbar />
+          <nav className="navbar">
+            <SearchInput
+              value={this.state.inputValue}
+              onChange={this.handleInputChange}
+            />
+            <SearchButton onClick={this.handleButtonClick} />
+          </nav>
         </header>
 
-        <button onClick={this.getData}>click</button>
-        <p>{this.state.category}</p>
+        <p>{ this.state.apiData }</p>
       </div>
     );
   }
