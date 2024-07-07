@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const api = {
   fetchData: async () => {
-    const URL = 'https://swapi.dev/api/';
+    const URL = 'https://swapi.dev/api';
 
     return await axios
       .get(URL)
